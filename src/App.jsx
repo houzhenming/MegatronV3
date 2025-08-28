@@ -4,9 +4,10 @@ import './App.css'
 import arrow from './assets/arrow.png'
 import lynxLogo from './assets/lynx-logo.png'
 import reactLynxLogo from './assets/react-logo.png'
+import { StreamerHub } from './pages/StreamerHub'
 
 export function App(props) {
-  const [alterLogo, setAlterLogo] = useState(false)
+  const [showHub, setShowHub] = useState(false)
 
   useEffect(() => {
     console.info('Hello, ReactLynx')
@@ -14,9 +15,12 @@ export function App(props) {
   props.onRender?.()
 
   const onTap = useCallback(() => {
-    'background only'
-    setAlterLogo(prevAlterLogo => !prevAlterLogo)
+    setShowHub(true)
   }, [])
+
+  if (showHub) {
+    return <StreamerHub />
+  }
 
   return (
     <view>
@@ -24,9 +28,7 @@ export function App(props) {
       <view className='App'>
         <view className='Banner'>
           <view className='Logo' bindtap={onTap}>
-            {alterLogo
-              ? <image src={reactLynxLogo} className='Logo--react' />
-              : <image src={lynxLogo} className='Logo--lynx' />}
+            <image src={lynxLogo} className='Logo--lynx' />
           </view>
           <text className='Title'>React</text>
           <text className='Subtitle'>on Lynx</text>
@@ -35,14 +37,9 @@ export function App(props) {
           <image src={arrow} className='Arrow' />
           <text className='Description'>Tap the logo and have fun!</text>
           <text className='Hint'>
-            Edit<text
-              style={{
-                fontStyle: 'italic',
-                color: 'rgba(255, 255, 255, 0.85)',
-              }}
-            >
-              {' src/App.tsx '}
-            </text>
+            Edit <text style={{ fontStyle: 'italic', color: 'rgba(255, 255, 255, 0.85)' }}>
+            {' src/App.jsx '}
+          </text>
             to see updates!
           </text>
         </view>
